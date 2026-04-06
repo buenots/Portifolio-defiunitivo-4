@@ -153,9 +153,9 @@ export default function BrunoDevPortfolio() {
   }, []);
 
   const projects = [
-    { title: "NEON_ARENA", tags: ["Unity", "C#", "GLSL"], desc: "Battle royale tático com shaders procedurais e sistema de física customizado.", color: C.neon },
-    { title: "CYBER_DASH", tags: ["Godot", "GDScript", "WebGL"], desc: "Runner infinito cyberpunk exportado para web com WebAssembly.", color: "#7c3aed" },
-    { title: "STELLAR_UI", tags: ["React", "Three.js", "GSAP"], desc: "Design system com componentes 3D interativos para dashboards focados.", color: "#2563eb" },
+    { title: "NEON_ARENA", tags: ["Unity", "C#", "GLSL"], desc: "Battle royale tático com shaders procedurais e sistema de física customizado.", color: C.neon, url: "https://neon-arena.itch.io", github: "https://github.com/bruno/neon-arena" },
+    { title: "CYBER_DASH", tags: ["Godot", "GDScript", "WebGL"], desc: "Runner infinito cyberpunk exportado para web com WebAssembly.", color: "#7c3aed", url: "https://cyber-dash.vercel.app" },
+    { title: "STELLAR_UI", tags: ["React", "Three.js", "GSAP"], desc: "Design system com componentes 3D interativos para dashboards focados.", color: "#2563eb", github: "https://github.com/bruno/stellar-ui" },
     { title: "VOID_NET", tags: ["Node.js", "WebSocket", "Canvas"], desc: "Plataforma multiplayer real-time com engine de colisão extrema.", color: "#f59e0b" },
   ];
 
@@ -484,32 +484,56 @@ export default function BrunoDevPortfolio() {
             Aberto para projetos freelance, colaborações e posições CLT/PJ.
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "40px" }}>
-            {[
-              { ph: "Seu nome", type: "text" },
-              { ph: "seu@email.com", type: "email" },
-            ].map((f) => (
-              <input key={f.ph} type={f.type} placeholder={f.ph} style={{
-                background: "transparent",
-                border: `1px solid #ffffff15`,
-                padding: "16px 20px",
-                color: C.text,
-                fontFamily: "'Space Mono', monospace",
-                fontSize: "13px",
-                outline: "none",
-                transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+          <form
+            action="https://formsubmit.co/bruno.gustavo@nave.org.br"
+            method="POST"
+            style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "40px" }}
+          >
+            {/* Configs do FormSubmit */}
+            <input type="hidden" name="_subject" value="Nova mensagem do Portfólio BRUNO.DEV" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
+
+            <input name="nome" type="text" placeholder="Seu nome" required style={{
+              background: "transparent",
+              border: `1px solid #ffffff15`,
+              padding: "16px 20px",
+              color: C.text,
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "13px",
+              outline: "none",
+              transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+            }}
+              onFocus={(e) => {
+                e.target.style.borderColor = `${C.neon}60`;
+                e.target.style.boxShadow = `0 0 20px ${C.neon}10`;
               }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = `${C.neon}60`;
-                  e.target.style.boxShadow = `0 0 20px ${C.neon}10`;
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = "#ffffff15";
-                  e.target.style.boxShadow = "none";
-                }}
-              />
-            ))}
-            <textarea placeholder="Sua mensagem..." rows={5} style={{
+              onBlur={(e) => {
+                e.target.style.borderColor = "#ffffff15";
+                e.target.style.boxShadow = "none";
+              }}
+            />
+            <input name="email" type="email" placeholder="seu@email.com" required style={{
+              background: "transparent",
+              border: `1px solid #ffffff15`,
+              padding: "16px 20px",
+              color: C.text,
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "13px",
+              outline: "none",
+              transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+            }}
+              onFocus={(e) => {
+                e.target.style.borderColor = `${C.neon}60`;
+                e.target.style.boxShadow = `0 0 20px ${C.neon}10`;
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#ffffff15";
+                e.target.style.boxShadow = "none";
+              }}
+            />
+            <textarea name="mensagem" placeholder="Sua mensagem..." rows={5} required style={{
               background: "transparent",
               border: `1px solid #ffffff15`,
               padding: "16px 20px",
@@ -523,11 +547,36 @@ export default function BrunoDevPortfolio() {
               onFocus={(e) => { e.target.style.borderColor = `${C.neon}60`; }}
               onBlur={(e) => { e.target.style.borderColor = "#ffffff15"; }}
             />
-          </div>
 
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-            <NeonBtn>Enviar Mensagem ↗</NeonBtn>
-          </div>
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+              <button type="submit" style={{
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                padding: "14px 32px",
+                border: "none",
+                background: `linear-gradient(135deg, #00ffe740, #00ffe715)`,
+                color: C.neon,
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "13px", letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
+                transition: "all 0.3s ease",
+              }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = `${C.neon}22`;
+                  e.currentTarget.style.boxShadow = `0 0 20px ${C.neon}60, inset 0 0 20px ${C.neon}10`;
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = `linear-gradient(135deg, #00ffe740, #00ffe715)`;
+                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                Enviar Mensagem ↗
+              </button>
+            </div>
+          </form>
 
           <div style={{
             marginTop: "64px", paddingTop: "40px",

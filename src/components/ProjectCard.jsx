@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { C } from "../constants";
+import { ExternalLink, Code2 } from "lucide-react";
 
-export function ProjectCard({ title, tags, desc, color, index }) {
+export function ProjectCard({ title, tags, desc, color, index, url, github }) {
   const cardRef = useRef();
   const [hovered, setHovered] = useState(false);
 
@@ -18,6 +19,7 @@ export function ProjectCard({ title, tags, desc, color, index }) {
   };
 
   const cColor = color || C.neon;
+  const hasLinks = url || github;
 
   return (
     <div
@@ -45,13 +47,70 @@ export function ProjectCard({ title, tags, desc, color, index }) {
         clipPath: "polygon(100% 0%, 0% 0%, 100% 100%)",
       }} />
 
-      <div style={{
-        width: "36px", height: "3px",
-        background: cColor, marginBottom: "24px",
-        boxShadow: `0 0 12px ${cColor}`,
-        transition: "width 0.3s ease",
-        ...(hovered ? { width: "60px" } : {}),
-      }} />
+      {/* Barra de acento + botões de link no topo */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+        <div style={{
+          width: "36px", height: "3px",
+          background: cColor,
+          boxShadow: `0 0 12px ${cColor}`,
+          transition: "width 0.3s ease",
+          ...(hovered ? { width: "60px" } : {}),
+        }} />
+
+        {/* Botões de Link e GitHub — opcionais */}
+        {hasLinks && (
+          <div style={{ display: "flex", gap: "8px", position: "relative", zIndex: 3 }}>
+            {url && (
+              <a href={url} target="_blank" rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  width: "32px", height: "32px",
+                  border: `1px solid ${cColor}40`,
+                  background: `${cColor}08`,
+                  borderRadius: "2px",
+                  textDecoration: "none",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = `${cColor}25`;
+                  e.currentTarget.style.borderColor = cColor;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = `${cColor}08`;
+                  e.currentTarget.style.borderColor = `${cColor}40`;
+                }}
+              >
+                <ExternalLink size={14} color={cColor} />
+              </a>
+            )}
+            {github && (
+              <a href={github} target="_blank" rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  width: "32px", height: "32px",
+                  border: "1px solid #ffffff20",
+                  background: "transparent",
+                  borderRadius: "2px",
+                  textDecoration: "none",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#ffffff10";
+                  e.currentTarget.style.borderColor = "#ffffff50";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.borderColor = "#ffffff20";
+                }}
+              >
+                <Code2 size={14} color={C.muted} />
+              </a>
+            )}
+          </div>
+        )}
+      </div>
 
       <h3 style={{
         fontFamily: "'Space Mono', monospace",

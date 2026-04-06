@@ -1,9 +1,27 @@
 import { useRef } from "react";
 import { C } from "../constants";
+import {
+  Box, Globe, Gamepad2, Sparkles, Server,
+  Cpu, Joystick, FileCode2
+} from "lucide-react";
+
+// Mapeamento de ícones por nome de skill
+const SKILL_ICONS = {
+  "Three.js / WebGL": Globe,
+  "React / Next.js": Box,
+  "Unity / C#": Gamepad2,
+  "GSAP / Animação": Sparkles,
+  "Node.js / APIs": Server,
+  "GLSL / Shaders": Cpu,
+  "Godot / GDScript": Joystick,
+  "TypeScript": FileCode2,
+};
 
 export function SkillBadge({ name, level, color, delay }) {
   const ref = useRef();
   const cColor = color || C.neon;
+  const Icon = SKILL_ICONS[name] || Box;
+
   return (
     <div
       ref={ref}
@@ -31,22 +49,22 @@ export function SkillBadge({ name, level, color, delay }) {
         e.currentTarget.style.boxShadow = "none";
       }}
     >
-      <span style={{
-        fontFamily: "'Space Mono', monospace",
-        fontSize: "12px", letterSpacing: "0.1em",
-        color: C.text, textTransform: "uppercase",
-      }}>{name}</span>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <div style={{ width: "80px", height: "2px", background: "#ffffff10", borderRadius: "2px" }}>
-          <div style={{
-            height: "100%", width: `${level}%`,
-            background: `linear-gradient(90deg, ${cColor}, ${cColor}aa)`,
-            boxShadow: `0 0 8px ${cColor}`,
-            borderRadius: "2px",
-            transition: "width 1s ease",
-          }} />
-        </div>
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: cColor }}>{level}%</span>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Icon size={16} color={cColor} strokeWidth={1.5} />
+        <span style={{
+          fontFamily: "'Space Mono', monospace",
+          fontSize: "12px", letterSpacing: "0.1em",
+          color: C.text, textTransform: "uppercase",
+        }}>{name}</span>
+      </div>
+      <div style={{ width: "80px", height: "2px", background: "#ffffff10", borderRadius: "2px" }}>
+        <div style={{
+          height: "100%", width: `${level}%`,
+          background: `linear-gradient(90deg, ${cColor}, ${cColor}aa)`,
+          boxShadow: `0 0 8px ${cColor}`,
+          borderRadius: "2px",
+          transition: "width 1s ease",
+        }} />
       </div>
     </div>
   );
