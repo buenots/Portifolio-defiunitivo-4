@@ -3,10 +3,7 @@ import { C } from "../constants";
 import {
   Box, Globe, Gamepad2, Sparkles, Server,
   Cpu, Joystick, FileCode2
-} from "lucide-react";
-
-// Mapeamento de ícones por nome de skill
-const SKILL_ICONS = {
+} from "lucide-react";const SKILL_ICONS = {
   "Three.js / WebGL": Globe,
   "React / Next.js": Box,
   "Unity / C#": Gamepad2,

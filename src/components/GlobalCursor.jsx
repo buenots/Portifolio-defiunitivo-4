@@ -21,7 +21,6 @@ export function GlobalCursor() {
     const ctx = canvas.getContext("2d");
 
     const draw = () => {
-      // lerp suave
       cur.current.x += (pos.current.x - cur.current.x) * 0.22;
       cur.current.y += (pos.current.y - cur.current.y) * 0.22;
       angle.current += 0.06;

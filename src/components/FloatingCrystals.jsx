@@ -30,10 +30,8 @@ export function FloatingCrystals() {
 
   useFrame(() => {
     particles.forEach((particle, i) => {
-        // Move upward slowly
         particle.position[1] += particle.speed * 0.02;
         
-        // Reset if it goes too high
         if (particle.position[1] > 10) {
             particle.position[1] = -10;
         }

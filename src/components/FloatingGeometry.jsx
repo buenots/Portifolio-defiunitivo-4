@@ -12,7 +12,6 @@ export function FloatingGeometry() {
       groupRef.current.rotation.x = clock.getElapsedTime() * 0.1;
       groupRef.current.position.y = Math.sin(clock.getElapsedTime()) * 0.3;
       
-      // Reactive pointer tracking
       groupRef.current.rotation.z += (pointer.x * 0.5 - groupRef.current.rotation.z) * 0.05;
     }
   });

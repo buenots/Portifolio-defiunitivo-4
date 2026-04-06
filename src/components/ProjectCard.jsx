@@ -46,8 +46,6 @@ export function ProjectCard({ title, tags, desc, color, index, url, github }) {
         background: `linear-gradient(225deg, ${cColor}30, transparent)`,
         clipPath: "polygon(100% 0%, 0% 0%, 100% 100%)",
       }} />
-
-      {/* Barra de acento + botões de link no topo */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div style={{
           width: "36px", height: "3px",
@@ -56,8 +54,6 @@ export function ProjectCard({ title, tags, desc, color, index, url, github }) {
           transition: "width 0.3s ease",
           ...(hovered ? { width: "60px" } : {}),
         }} />
-
-        {/* Botões de Link e GitHub — opcionais */}
         {hasLinks && (
           <div style={{ display: "flex", gap: "8px", position: "relative", zIndex: 3 }}>
             {url && (

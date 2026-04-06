@@ -35,22 +35,13 @@ export function EnergyRing() {
     <group>
       <ambientLight intensity={0.3} />
       <pointLight color={C.neon} intensity={3} position={[0, 2, 2]} />
-      <pointLight color={C.purple} intensity={2} position={[0, -2, -2]} />
-
-      {/* Ring principal */}
-      <mesh ref={ringRef}>
+      <pointLight color={C.purple} intensity={2} position={[0, -2, -2]} />      <mesh ref={ringRef}>
         <torusGeometry args={[3, 0.04, 16, 100]} />
         <meshStandardMaterial color={C.neon} emissive={C.neon} emissiveIntensity={1.5} transparent opacity={0.9} />
-      </mesh>
-
-      {/* Segundo ring cruzado */}
-      <mesh rotation={[Math.PI / 3, 0, Math.PI / 6]}>
+      </mesh>      <mesh rotation={[Math.PI / 3, 0, Math.PI / 6]}>
         <torusGeometry args={[2.5, 0.02, 16, 80]} />
         <meshStandardMaterial color={C.purple} emissive={C.purple} emissiveIntensity={1} transparent opacity={0.6} />
-      </mesh>
-
-      {/* Particulas orbitando */}
-      <points ref={particlesRef}>
+      </mesh>      <points ref={particlesRef}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
         </bufferGeometry>

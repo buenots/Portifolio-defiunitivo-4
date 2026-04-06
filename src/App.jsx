@@ -18,9 +18,6 @@ import Lenis from '@studio-freight/lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ══════════════════════════════════════════════════
-   MAIN APP
-══════════════════════════════════════════════════ */
 export default function BrunoDevPortfolio() {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
@@ -31,7 +28,6 @@ export default function BrunoDevPortfolio() {
   const heroCTARef = useRef();
   const navRef = useRef();
 
-  /* ─── Lenis Smooth Scroll ─── */
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.4,
@@ -56,9 +52,7 @@ export default function BrunoDevPortfolio() {
     };
   }, []);
 
-  /* ─── Parallax & GSAP Animations ─── */
   useEffect(() => {
-    // 1. Initial Hero Entrance (No scrub)
     const tl = gsap.timeline({ delay: 0.3 });
     tl.fromTo(heroTitleRef.current, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "power4.out" })
       .fromTo(heroSubRef.current, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power4.out" }, "-=1")
@@ -66,7 +60,6 @@ export default function BrunoDevPortfolio() {
 
     gsap.fromTo(navRef.current, { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 1, delay: 1.5, ease: "power4.out" });
 
-    // 2. Hero Scrub Parallax
     gsap.to(heroWrapperRef.current, {
       y: 200,
       scale: 0.9,
@@ -79,7 +72,6 @@ export default function BrunoDevPortfolio() {
       }
     });
 
-    // 3. About Section Scrubbing
     gsap.fromTo(".about-word",
       { y: 40, opacity: 0 },
       {
@@ -106,7 +98,6 @@ export default function BrunoDevPortfolio() {
       }
     );
 
-    // 4. Projects Parallax (Cards come in dynamically mapped to scroll)
     const cards = gsap.utils.toArray(".project-card-container");
     cards.forEach((card, i) => {
       gsap.fromTo(card,
@@ -123,7 +114,6 @@ export default function BrunoDevPortfolio() {
       );
     });
 
-    // 5. Skills Reveal
     gsap.fromTo(".skill-badge-item",
       { x: -50, opacity: 0 },
       {
@@ -137,7 +127,6 @@ export default function BrunoDevPortfolio() {
       }
     );
 
-    // 6. Section Trackers
     const sections = ["hero", "about", "projects", "skills", "contact"];
     sections.forEach((id) => {
       ScrollTrigger.create({
@@ -234,7 +223,6 @@ export default function BrunoDevPortfolio() {
       </nav>
 
       <Section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden", padding: 0 }}>
-        {/* BACKGROUND 3D GIGANTE INTERATIVO (Agora recolorido para cyberpunk) */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
           <Canvas eventSource={typeof window !== 'undefined' ? document.body : undefined} camera={{ position: [0, 0, 5], fov: 60 }} gl={{ antialias: true, alpha: true }}>
             <FluidBlob />
@@ -298,7 +286,6 @@ export default function BrunoDevPortfolio() {
       <Section id="about">
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 6vw, 80px)", position: "relative" }}>
 
-          {/* Elemento 3D Novo - Jogado mais pro fundo com opacidade muito baixa */}
           <div style={{ position: "absolute", right: "0%", top: "0%", width: "100%", height: "100%", zIndex: 0, opacity: 0.2, pointerEvents: "none", filter: "blur(2px)" }}>
             <Canvas eventSource={typeof window !== 'undefined' ? document.body : undefined} camera={{ position: [0, 0, 10], fov: 45 }}>
               <FloatingGeometry />
@@ -377,7 +364,6 @@ export default function BrunoDevPortfolio() {
       </Section>
 
       <Section id="projects" style={{ background: `linear-gradient(180deg, ${C.bg}, ${C.surface}, ${C.bg})` }}>
-        {/* Elemento 3D Novo - Mais opacidade reduzida para nao causar barulho visual */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.3, pointerEvents: "none" }}>
           <Canvas eventSource={typeof window !== 'undefined' ? document.body : undefined} camera={{ position: [0, 0, 10], fov: 75 }}>
             <FloatingCrystals />
@@ -450,7 +436,6 @@ export default function BrunoDevPortfolio() {
       </Section>
 
       <Section id="contact" style={{ background: C.surface, position: "relative", overflow: "hidden" }}>
-        {/* 3D Energy Ring no fundo do contato */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.25, pointerEvents: "none" }}>
           <Canvas eventSource={typeof window !== 'undefined' ? document.body : undefined} camera={{ position: [0, 0, 8], fov: 50 }}>
             <EnergyRing />
@@ -489,7 +474,6 @@ export default function BrunoDevPortfolio() {
             method="POST"
             style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "40px" }}
           >
-            {/* Configs do FormSubmit */}
             <input type="hidden" name="_subject" value="Nova mensagem do Portfólio BRUNO.DEV" />
             <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_template" value="table" />

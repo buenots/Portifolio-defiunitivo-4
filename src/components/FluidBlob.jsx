@@ -23,9 +23,9 @@ export function FluidBlob() {
       
       <Sphere ref={meshRef} visible args={[2.5, 64, 64]} scale={1.2}>
         <MeshDistortMaterial
-          color="#060d14" // ultra dark blue
+          color="#060d14"
           emissive={C.purple} 
-          emissiveIntensity={0.2} // Subtle overall
+          emissiveIntensity={0.2}
           roughness={0.1}
           metalness={0.9}
           distort={0.4} 
