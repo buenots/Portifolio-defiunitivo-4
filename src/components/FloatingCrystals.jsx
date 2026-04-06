@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 export function FloatingCrystals() {
   const groupRef = useRef();
-  const count = 150;
+  const count = 20;
   
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const particles = useMemo(() => {
