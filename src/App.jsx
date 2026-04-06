@@ -260,7 +260,7 @@ export default function BrunoDevPortfolio() {
           fontSize: "clamp(24px, 5vw, 48px)", color: C.bg, fontWeight: "bold",
           zIndex: 10, letterSpacing: "0.2em", whiteSpace: "nowrap"
         }}>
-          ACESSO_PERMITIDO
+         
         </div>
       </div>
       <style>{`
