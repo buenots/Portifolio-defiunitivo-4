@@ -22,6 +22,14 @@ export default function BrunoDevPortfolio() {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
 
+  const lenisRef = useRef(null);
+  
+  const portalContainerRef = useRef(null);
+  const ring1Ref = useRef(null);
+  const ring2Ref = useRef(null);
+  const portalFillRef = useRef(null);
+  const portalTextRef = useRef(null);
+
   const heroWrapperRef = useRef();
   const heroTitleRef = useRef();
   const heroSubRef = useRef();
@@ -34,6 +42,8 @@ export default function BrunoDevPortfolio() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+
+    lenisRef.current = lenis;
 
     lenis.on('scroll', (e) => {
       setScrollY(window.scrollY);
@@ -127,7 +137,7 @@ export default function BrunoDevPortfolio() {
       }
     );
 
-    const sections = ["hero", "about", "projects", "skills", "contact"];
+    const sections = ["hero", "about", "projects", "skills"];
     sections.forEach((id) => {
       ScrollTrigger.create({
         trigger: `#${id}`,
@@ -141,30 +151,118 @@ export default function BrunoDevPortfolio() {
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    const target = document.getElementById(targetId.replace('#', ''));
+    if (!target) return;
+
+    if (portalContainerRef.current && lenisRef.current) {
+      const tl = gsap.timeline();
+      
+      gsap.set(portalContainerRef.current, { opacity: 1 });
+      gsap.set([ring1Ref.current, ring2Ref.current, portalFillRef.current], { scale: 0, opacity: 1 });
+      gsap.set(portalTextRef.current, { opacity: 0, scale: 0.8 });
+
+      tl.to(ring1Ref.current, {
+        scale: 40,
+        rotation: 360,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.inOut"
+      }, 0)
+      .to(ring2Ref.current, {
+        scale: 50,
+        rotation: -360,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power3.inOut"
+      }, 0.1)
+      .to(portalFillRef.current, {
+        scale: 60,
+        duration: 0.8,
+        ease: "expo.in",
+        onComplete: () => {
+          lenisRef.current.scrollTo(target, { immediate: true });
+        }
+      }, 0.2)
+      .to(portalTextRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.4,
+        ease: "back.out(2)"
+      }, 0.6)
+      .to(portalTextRef.current, {
+        opacity: 0,
+        scale: 1.2,
+        duration: 0.3,
+        ease: "power2.in"
+      }, "+=0.3")
+      .to(portalFillRef.current, {
+        scale: 0,
+        duration: 0.8,
+        ease: "expo.out"
+      }, "-=0.2")
+      .set(portalContainerRef.current, { opacity: 0 });
+
+    } else {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const projects = [
-    { title: "NEON_ARENA", tags: ["Unity", "C#", "GLSL"], desc: "Battle royale tático com shaders procedurais e sistema de física customizado.", color: C.neon, url: "https://neon-arena.itch.io", github: "https://github.com/bruno/neon-arena" },
-    { title: "CYBER_DASH", tags: ["Godot", "GDScript", "WebGL"], desc: "Runner infinito cyberpunk exportado para web com WebAssembly.", color: "#7c3aed", url: "https://cyber-dash.vercel.app" },
-    { title: "STELLAR_UI", tags: ["React", "Three.js", "GSAP"], desc: "Design system com componentes 3D interativos para dashboards focados.", color: "#2563eb", github: "https://github.com/bruno/stellar-ui" },
-    { title: "VOID_NET", tags: ["Node.js", "WebSocket", "Canvas"], desc: "Plataforma multiplayer real-time com engine de colisão extrema.", color: "#f59e0b" },
+    { title: "Arquivos 2C", tags: ["React", "Tailwind CSS", "Framer Motion"], desc: "Plataforma desenvolvida para hospedar e compartilhar podcasts de um projeto escolar da minha turma.", color: C.neon, url: "https://arquivos2c.vercel.app/" },
+    { title: "Osmosis Explorer", tags: ["React", "Three.js", "Framer Motion"], desc: "Experiência interativa em 3D criada para explicar os conceitos de osmose e pressão osmótica de forma visual e didática.", color: "#7c3aed", url: "https://osmosisx.vercel.app/" },
+    { title: "ChatREC", tags: ["React", "Tailwind CSS", "Framer Motion"], desc: "Chatbot interativo programado com linguagem e personalidade tipicamente recifense, criando uma experiência regionalizada. ", color: "#2563eb", url: "https://chatrec.vercel.app" },
+    { title: "Nexus Store", tags: ["React", "Tailwind CSS", "Framer Motion"], desc: "Protótipo funcional de e-commerce desenvolvido para aplicar e aprimorar habilidades práticas de frontend e Backend.", color: "#f59e0b", url: "https://projeto2-alpha-two.vercel.app", github: "https://github.com/Brunogustavo74/Projeto2/tree/main" },
   ];
 
   const skills = [
-    { name: "Three.js / WebGL", level: 90, color: C.neon },
-    { name: "React / Next.js", level: 88, color: "#2563eb" },
-    { name: "Unity / C#", level: 85, color: "#7c3aed" },
-    { name: "GSAP / Animação", level: 82, color: C.neon },
-    { name: "Node.js / APIs", level: 80, color: "#10b981" },
-    { name: "GLSL / Shaders", level: 75, color: "#f59e0b" },
-    { name: "Godot / GDScript", level: 72, color: "#7c3aed" },
-    { name: "TypeScript", level: 78, color: "#2563eb" },
+    { name: "Three.js / WebGL", level: 100, color: C.neon },
+    { name: "React / Next.js", level: 100, color: "#2563eb" },
+    { name: "Unity / C#", level: 100, color: "#7c3aed" },
+    { name: "GSAP / Animação", level: 100, color: C.neon },
+    { name: "Node.js / APIs", level: 100, color: "#10b981" },
+    { name: "GLSL / Shaders", level: 100, color: "#f59e0b" },
+    { name: "Godot / GDScript", level: 100, color: "#7c3aed" },
+    { name: "TypeScript", level: 100, color: "#2563eb" },
   ];
 
-  const navLinks = ["about", "projects", "skills", "contact"];
+  const navLinks = ["about", "projects", "skills",];
 
   const aboutWords = "Construo experiências digitais que vivem na interseção entre arte e engenharia. Cada linha de código é coreografada para criar impacto, fluidez e imersão total.".split(" ");
 
   return (
     <>
+      <div 
+        ref={portalContainerRef}
+        style={{
+          position: "fixed", inset: 0,
+          pointerEvents: "none", zIndex: 99999,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          opacity: 0
+        }}
+      >
+        <div ref={ring1Ref} style={{
+          position: "absolute", width: "100px", height: "100px",
+          border: `2px dashed ${C.neon}`, borderRadius: "50%",
+        }} />
+        <div ref={ring2Ref} style={{
+          position: "absolute", width: "140px", height: "140px",
+          border: `1px solid ${C.neon}`, borderRadius: "50%",
+        }} />
+        <div ref={portalFillRef} style={{
+          position: "absolute", width: "100px", height: "100px",
+          background: C.neon, borderRadius: "50%",
+          boxShadow: `0 0 100px ${C.neon}`
+        }} />
+        <div ref={portalTextRef} style={{
+          position: "absolute", fontFamily: "'Space Mono', monospace",
+          fontSize: "clamp(24px, 5vw, 48px)", color: C.bg, fontWeight: "bold",
+          zIndex: 10, letterSpacing: "0.2em", whiteSpace: "nowrap"
+        }}>
+          ACESSO_PERMITIDO
+        </div>
+      </div>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -204,21 +302,23 @@ export default function BrunoDevPortfolio() {
 
         <div style={{ display: "flex", gap: "32px", alignItems: "center" }}>
           {navLinks.map((link) => (
-            <a key={link} href={`#${link}`} style={{
-              fontFamily: "'Space Mono', monospace", fontSize: "11px",
-              letterSpacing: "0.15em", textTransform: "uppercase",
-              color: activeSection === link ? C.neon : C.muted,
-              textDecoration: "none",
-              transition: "color 0.3s ease",
-              position: "relative",
-            }}
+            <a key={link} href={`#${link}`}
+              onClick={(e) => handleNavClick(e, link)}
+              style={{
+                fontFamily: "'Space Mono', monospace", fontSize: "11px",
+                letterSpacing: "0.15em", textTransform: "uppercase",
+                color: activeSection === link ? C.neon : C.muted,
+                textDecoration: "none",
+                transition: "color 0.3s ease",
+                position: "relative",
+              }}
               onMouseEnter={(e) => e.target.style.color = C.neon}
               onMouseLeave={(e) => e.target.style.color = activeSection === link ? C.neon : C.muted}
             >
               {link}
             </a>
           ))}
-          <NeonBtn href="#contact">Contratar</NeonBtn>
+          <NeonBtn href="#contact" onClick={(e) => handleNavClick(e, 'contact')}>Contratar</NeonBtn>
         </div>
       </nav>
 
@@ -277,8 +377,8 @@ export default function BrunoDevPortfolio() {
           </p>
 
           <div ref={heroCTARef} style={{ display: "flex", gap: "16px", flexWrap: "wrap", opacity: 0 }}>
-            <NeonBtn href="#projects">Ver Projetos</NeonBtn>
-            <NeonBtn href="#contact" outline>Entre em Contato</NeonBtn>
+            <NeonBtn href="#projects" onClick={(e) => handleNavClick(e, 'projects')}>Ver Projetos</NeonBtn>
+            <NeonBtn href="#contact" outline onClick={(e) => handleNavClick(e, 'contact')}>Entre em Contato</NeonBtn>
           </div>
         </div>
       </Section>
@@ -298,7 +398,7 @@ export default function BrunoDevPortfolio() {
                 fontFamily: "'Space Mono', monospace", fontSize: "10px",
                 color: C.neon, letterSpacing: "0.3em", textTransform: "uppercase",
                 marginBottom: "16px",
-              }}>01 / SOBRE</div>
+              }}> SOBRE</div>
 
               <h2 style={{
                 fontFamily: "'Bebas Neue', sans-serif",
@@ -309,10 +409,10 @@ export default function BrunoDevPortfolio() {
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
                 {[
-                  { n: "5+", l: "Anos de XP" },
+                  { n: "1", l: "Anos de XP" },
                   { n: "20+", l: "Projetos" },
-                  { n: "8", l: "Jogos Lançados" },
-                  { n: "100%", l: "Dedicação" },
+
+
                 ].map((s) => (
                   <div key={s.l} className="about-stat" style={{
                     borderTop: `1px solid ${C.neon}30`,
@@ -376,7 +476,7 @@ export default function BrunoDevPortfolio() {
               fontFamily: "'Space Mono', monospace", fontSize: "10px",
               color: C.neon, letterSpacing: "0.3em", textTransform: "uppercase",
               marginBottom: "16px",
-            }}>02 / PROJETOS</div>
+            }}> PROJETOS</div>
             <h2 style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: "clamp(48px, 7vw, 96px)",
@@ -406,7 +506,7 @@ export default function BrunoDevPortfolio() {
                 fontFamily: "'Space Mono', monospace", fontSize: "10px",
                 color: C.neon, letterSpacing: "0.3em", textTransform: "uppercase",
                 marginBottom: "16px",
-              }}>03 / SKILLS</div>
+              }}> SKILLS</div>
               <h2 style={{
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: "clamp(48px, 7vw, 96px)",
@@ -447,7 +547,7 @@ export default function BrunoDevPortfolio() {
             fontFamily: "'Space Mono', monospace", fontSize: "10px",
             color: C.neon, letterSpacing: "0.3em", textTransform: "uppercase",
             marginBottom: "16px",
-          }}>04 / CONTATO</div>
+          }}> CONTATO</div>
 
           <h2 style={{
             fontFamily: "'Bebas Neue', sans-serif",
@@ -567,8 +667,10 @@ export default function BrunoDevPortfolio() {
             borderTop: `1px solid #ffffff08`,
             display: "flex", justifyContent: "center", gap: "32px", flexWrap: "wrap",
           }}>
-            {["GitHub", "LinkedIn", "Twitter", "Itch.io"].map((s) => (
-              <a key={s} href="#" style={{
+            {[
+              { name: "GitHub", url: "https://github.com/buenots" }
+            ].map((s) => (
+              <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: "'Space Mono', monospace", fontSize: "11px",
                 color: C.muted, textDecoration: "none",
                 letterSpacing: "0.15em", textTransform: "uppercase",
@@ -576,7 +678,7 @@ export default function BrunoDevPortfolio() {
               }}
                 onMouseEnter={(e) => e.target.style.color = C.neon}
                 onMouseLeave={(e) => e.target.style.color = C.muted}
-              >{s}</a>
+              >{s.name}</a>
             ))}
           </div>
         </div>
@@ -591,9 +693,7 @@ export default function BrunoDevPortfolio() {
         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: C.muted }}>
           © 2025 BRUNO.DEV
         </span>
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: C.muted }}>
-          CRAFTED WITH <span style={{ color: C.neon }}>THREE.JS</span> + <span style={{ color: "#7c3aed" }}>GSAP</span>
-        </span>
+
       </footer>
     </>
   );
